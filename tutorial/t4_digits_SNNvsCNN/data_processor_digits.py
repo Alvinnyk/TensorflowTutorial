@@ -12,12 +12,15 @@ if __name__ == "__main__":
         mnist = tf.keras.datasets.mnist
         (train_data, train_label), (test_data, test_label) = mnist.load_data()
 
+        img_data = np.concatenate((train_data, test_data))
+        img_label = np.concatenate((train_label, test_label))
+
+        img_data = img_data/255.0
+
         # Saves data locally for future use
         print("Saving dataset to /data")
-        np.save("data/train/train_data", train_data)
-        np.save("data/train/train_label", train_label)
-        np.save("data/test/test_data", test_data)
-        np.save("data/test/test_label", test_label)
+        np.save("data/img_data", img_data)
+        np.save("data/img_label", img_label)
 
         print("Data processing completed.")
 

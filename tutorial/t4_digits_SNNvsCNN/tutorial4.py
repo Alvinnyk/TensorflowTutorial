@@ -31,7 +31,7 @@ def SNN_model(img_data, img_label):
 
     # Compile the model by choosing the optimizer, loss_function, and metrics
     model.compile(optimizer='adam',
-                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
+                  loss="sparse_categorical_crossentropy",
                   metrics=['accuracy'])
 
     print(model.summary())
@@ -70,7 +70,7 @@ def CNN_model(img_data, img_label):
     ])
 
     model.compile(optimizer="adam",
-                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
+                  loss="sparse_categorical_crossentropy",
                   metrics=["accuracy"])
     print(model.summary())
     print("==================================================")
@@ -87,6 +87,8 @@ def CNN_model(img_data, img_label):
 def loadData():
     img_data = np.load("data/img_data.npy")
     img_label = np.load("data/img_label.npy")
+    print(img_data[0])
+    exit(0)
     return img_data, img_label
 
 if __name__ == "__main__":

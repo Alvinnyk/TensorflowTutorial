@@ -43,6 +43,9 @@ import numpy as np
      [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0]]
 '''
 
+# set this to True if you want to retrain model
+TRAIN_MODEL = True
+
 if __name__ == "__main__":
 
     train_data = []
@@ -79,17 +82,17 @@ if __name__ == "__main__":
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
-    # Attempts to load model from model folder, else it trains a new model
-    try:
-        # Loads the pre-trained model
-        model.load_weights("model/model")
-    except:
+    if TRAIN_MODEL:
         # Trains, evaluates and saves the model
-        model.fit(train_data, train_label, epochs=5)
+        model.fit(train_data, train_label, epochs=5, verbose=2)
+
+        print("===== Evaluation =====")
         model.evaluate(test_data, test_label, verbose=2)
 
         # this saves the model as weights. We have to recreate and compile the same model to load the weights.
         model.save_weights("model/model")
+    else:
+        model.load_weights("model/model")
 
     # combines all data and labels
     all_data = np.concatenate((train_data, test_data))
